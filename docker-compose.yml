@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+      - SERVICES=iam,lambda,s3,apigateway,cloudformation,resource-groups
+      - DEBUG=1
+      - AWS_ACCESS_KEY_ID=dummy
+      - AWS_SECRET_ACCESS_KEY=dummy
+    ports:
+      - "4566:4566"
+    volumes:
+      - "./localstack:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+    networks:
+      - localstack-net
+
+networks:
+  localstack-net:
+    driver: bridge
